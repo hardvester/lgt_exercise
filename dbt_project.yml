@@ -1,0 +1,48 @@
+name: 'lgt_vault_project'
+version: '1.0.0'
+config-version: 2
+
+profile: 'lgt_vault_project'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+dispatch:
+  - macro_namespace: automate_dv
+    search_order:
+      - lgt_vault_project
+      - automate_dv
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  hash: 'SHA'          # dbtvault: use SHA-256 hashing
+  hashdiff_naming: 'HK' # prefix for hash keys
+
+models:
+  lgt_vault_project:
+    staging:
+      +materialized: table
+      +schema: staging
+    raw_vault:
+      +materialized: incremental
+      +schema: raw_vault
+      hubs:
+        +tags: ['hub']
+      links:
+        +tags: ['link']
+      satellites:
+        +tags: ['satellite']
+    marts:
+      +materialized: view
+      +schema: marts
+
+seeds:
+  lgt_vault_project:
+    +schema: raw

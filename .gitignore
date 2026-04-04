@@ -1,0 +1,20 @@
+# dbt
+target/
+dbt_packages/
+logs/
+package-lock.yml
+
+# DuckDB
+*.duckdb
+*.duckdb.wal
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
